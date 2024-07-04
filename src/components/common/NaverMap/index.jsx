@@ -114,11 +114,8 @@ const MyMap = ({ route, setRoute, destination, setDistance }) => {
 
   const FindRoutes = async destination => {
     /* 경도,위도순 */
-    const getRoutes = await axios.get('/api/findRoute', {
-      params: {
-        start: `${currentPosition[0]},${currentPosition[1]}`,
-        goal: destination.goal,
-      },
+    const getRoutes = await axios.get("/api/findRoute", {
+      params: { start: `${currentPosition[0]},${currentPosition[1]}`, goal: destination.goal },
     });
 
     const getRouteResult = getRoutes.data.data;

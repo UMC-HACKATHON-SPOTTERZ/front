@@ -15,6 +15,7 @@ export default function PhotoSpotDetail({ selectedData, setSelectedData }) {
   const [destination, setDestination] = useState(null);
   const [distance, setDistance] = useState(null);
   const [ImageCard, setImageCard] = useState(null);
+  const [title, setTitle] = useState(null);
 
   // 좋아요
   const [hasLiked, setHasLiked] = useState(false);
@@ -22,52 +23,64 @@ export default function PhotoSpotDetail({ selectedData, setSelectedData }) {
 
   // 목적지 설정
   useEffect(() => {
-    setDestination({ goal: '127.0470349,37.506823' });
-  }, []);
+    if (selectedData) {
+      getSpotById();
+    }
+  }, [selectedData]);
+
+  const getSpotById = async () => {
+    const spotId = selectedData.spotId;
+
+    const response = await axios.get("/api/spots/getSpotById", { params: { spotId } });
+
+    const result = response.data.data;
+
+    setImageCard(result.imgUrl);
+    setTitle(result.title);
+    console.log(`${result.longitude},${result.latitude}`);
+    setDestination({ goal: `${result.longitude},${result.latitude}` });
+  };
+
 
   // 선택된 데이터 변경 시 이미지 업데이트 및 좋아요 상태 초기화
   useEffect(() => {
     if (selectedData) {
-      setImageCard(selectedData?.url); // 선택된 데이터의 이미지 업데이트
-      fetchLikeStatus(selectedData.id); // 선택된 데이터의 좋아요 상태 초기화 및 좋아요 수 가져오기
+      setImageCard(selectedData?.imgUrl); // 선택된 데이터의 이미지 업데이트
+      fetchLikeStatus(selectedData.spotId); // 선택된 데이터의 좋아요 상태 초기화 및 좋아요 수 가져오기
     }
   }, [selectedData]);
 
   // 좋아요 상태 및 좋아요 수 초기화 함수
   const fetchLikeStatus = async spotId => {
     try {
-      const response = await axios.get('/api/v1/spots/like');
+      const response = await axios.get("/api/v1/spots/like");
       setHasLiked(response.data.hasLiked);
       setLikeCount(response.data.likeCount);
     } catch (error) {
-      console.error('좋아요 상태 초기화 실패:', error);
+      console.error("좋아요 상태 초기화 실패:", error);
     }
   };
 
   // 좋아요 클릭 핸들러
   const handleLikeClick = async () => {
-    if (localStorage.getItem('id')) {
-      try {
-        if (hasLiked) {
-          await axios.delete('/api/spots/like', {
-            userId: parseInt(window.localStorage.getItem('id')), // 실제 사용자 ID로 변경해야 함
-            spotId: parseInt(selectedData.id),
-          });
-          setLikeCount(likeCount - 1);
-          setHasLiked(false);
-        } else {
-          await axios.post('/api/spots/like', {
-            userId: parseInt(window.localStorage.getItem('id')), // 실제 사용자 ID로 변경해야 함
-            spotId: parseInt(selectedData.id),
-          });
-          setLikeCount(likeCount + 1);
-          setHasLiked(true);
-        }
-      } catch (error) {
-        console.error('좋아요 요청 실패:', error);
+    try {
+      if (hasLiked) {
+        await axios.delete("/api/spots/like", {
+          userId: parseInt(window.localStorage.getItem("id")), // 실제 사용자 ID로 변경해야 함
+          spotId: parseInt(selectedData.spotId),
+        });
+        setLikeCount(likeCount - 1);
+        setHasLiked(false);
+      } else {
+        await axios.post("/api/spots/like", {
+          userId: parseInt(window.localStorage.getItem("id")), // 실제 사용자 ID로 변경해야 함
+          spotId: parseInt(selectedData.spotId),
+        });
+        setLikeCount(likeCount + 1);
+        setHasLiked(true);
       }
-    } else {
-      alert('로그인이 필요합니다.');
+    } catch (error) {
+      console.error("좋아요 요청 실패:", error);
     }
   };
 
@@ -98,8 +111,8 @@ export default function PhotoSpotDetail({ selectedData, setSelectedData }) {
           gap: '16px',
         }}
       >
-        <Image src={CircleWithStar} alt='' width={56} height={56} />
-        <S.Text style={{ fontWeight: 800, fontSize: '20px' }}>댕댕이</S.Text>
+        <Image src={CircleWithStar} alt="" width={56} height={56} />
+        <S.Text style={{ fontWeight: 800, fontSize: "20px" }}>{title}</S.Text>
       </div>
       <S.ImageCard>
         {ImageCard && (
