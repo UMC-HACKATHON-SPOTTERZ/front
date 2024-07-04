@@ -18,6 +18,12 @@ export default function SpotList({ addImage = false }) {
     <Masonry columnsCount={2} gutter='2rem'>
       {addImage === true && (
         <AddImage onClick={() => router.push('/upload')}>
+          <Image
+            src='/icons/plus_white.svg'
+            alt='plus'
+            width={37}
+            height={37}
+          />
           사진 업로드하기
         </AddImage>
       )}
@@ -34,6 +40,7 @@ const AddImage = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 
   width: auto;
   height: 20rem;
