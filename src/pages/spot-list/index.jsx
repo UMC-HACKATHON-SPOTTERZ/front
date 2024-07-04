@@ -72,6 +72,14 @@ export default function SpotList() {
     }, 3000);
   }, []);
 
+  const handleClickButton = () => {
+    if (localStorage.getItem('id')) {
+      router.push('/my-page');
+    } else {
+      alert('로그인이 필요합니다.');
+    }
+  };
+
   return (
     <div>
       {isLoading && (

@@ -20,17 +20,6 @@ export default function SignUp() {
   const handleSubmit = async e => {
     e.preventDefault();
 
-    const validatePassword = password => {
-      // 비밀번호가 8글자 이상이고, 특수문자가 포함되어 있는지 검사
-      const regex = /^(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
-      return regex.test(password);
-    };
-
-    if (!validatePassword(password)) {
-      alert('8글자 이상, 특수문자를 포함해서 적어주세요!');
-      return;
-    }
-
     try {
       console.log('비밀번호가 유효하여 회원가입 진행 가능');
 

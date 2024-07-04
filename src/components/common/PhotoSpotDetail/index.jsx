@@ -1,13 +1,13 @@
-import * as S from "./style";
-import HeartOutline from "./heart_outline.svg";
-import HeartFilled from "./heart_filled.svg";
-import AvatarIcon from "./avatar.svg";
-import CircleWithStar from "./CircleWithStar.svg";
-import Image from "next/image";
-import NaverMapComponent from "../NaverMap";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import ClickOutside from "../ClickOutside";
+import * as S from './style';
+import HeartOutline from './heart_outline.svg';
+import HeartFilled from './heart_filled.svg';
+import AvatarIcon from './avatar.svg';
+import CircleWithStar from './CircleWithStar.svg';
+import Image from 'next/image';
+import NaverMapComponent from '../NaverMap';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import ClickOutside from '../ClickOutside';
 
 export default function PhotoSpotDetail({ selectedData, setSelectedData }) {
   /* 경로 저장 */
@@ -41,6 +41,7 @@ export default function PhotoSpotDetail({ selectedData, setSelectedData }) {
     setDestination({ goal: `${result.longitude},${result.latitude}` });
   };
 
+
   // 선택된 데이터 변경 시 이미지 업데이트 및 좋아요 상태 초기화
   useEffect(() => {
     if (selectedData) {
@@ -50,7 +51,7 @@ export default function PhotoSpotDetail({ selectedData, setSelectedData }) {
   }, [selectedData]);
 
   // 좋아요 상태 및 좋아요 수 초기화 함수
-  const fetchLikeStatus = async (spotId) => {
+  const fetchLikeStatus = async spotId => {
     try {
       const response = await axios.get("/api/v1/spots/like");
       setHasLiked(response.data.hasLiked);
@@ -86,28 +87,28 @@ export default function PhotoSpotDetail({ selectedData, setSelectedData }) {
   return (
     <div
       style={{
-        position: "absolute",
+        position: 'absolute',
         bottom: 0,
         zIndex: 999,
-        width: "500px",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "end",
-        backdropFilter: "blur(10px) saturate(180%)",
-        WebkitBackdropFilter: "blur(10px) saturate(180%)",
-        backgroundColor: "rgba(0,0,0, 0.2)",
+        width: '500px',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'end',
+        backdropFilter: 'blur(10px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(10px) saturate(180%)',
+        backgroundColor: 'rgba(0,0,0, 0.2)',
       }}
     >
       <div
         style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          marginBottom: "35px",
-          gap: "16px",
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: '35px',
+          gap: '16px',
         }}
       >
         <Image src={CircleWithStar} alt="" width={56} height={56} />
@@ -117,14 +118,14 @@ export default function PhotoSpotDetail({ selectedData, setSelectedData }) {
         {ImageCard && (
           <Image
             src={ImageCard}
-            alt=""
+            alt=''
             width={183}
             height={267}
             style={{
-              width: "183px",
-              height: "267px",
-              borderRadius: "5px",
-              objectFit: "contain",
+              width: '183px',
+              height: '267px',
+              borderRadius: '5px',
+              objectFit: 'contain',
             }}
           />
         )}
@@ -132,56 +133,56 @@ export default function PhotoSpotDetail({ selectedData, setSelectedData }) {
       <ClickOutside onClick={() => setSelectedData(null)}>
         <div
           style={{
-            width: "500px",
-            padding: "24px",
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            borderRadius: "20px 20px 0px 0px",
-            background: "#fff",
+            width: '500px',
+            padding: '24px',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            borderRadius: '20px 20px 0px 0px',
+            background: '#fff',
           }}
         >
           <div
             style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              gap: "6px",
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: '6px',
             }}
           >
             {hasLiked ? (
               <Image
                 src={HeartFilled}
-                alt=""
+                alt=''
                 onClick={handleLikeClick}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: 'pointer' }}
               />
             ) : (
               <Image
                 src={HeartOutline}
-                alt=""
+                alt=''
                 onClick={handleLikeClick}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: 'pointer' }}
               />
             )}
             <S.Text>{likeCount}</S.Text>
-            <div style={{ width: "16px" }}></div>
-            <Image src={AvatarIcon} alt="" />
+            <div style={{ width: '16px' }}></div>
+            <Image src={AvatarIcon} alt='' />
             <S.Text>15</S.Text>
           </div>
           <div
             style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              gap: "6px",
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: '6px',
             }}
           >
             <S.Text>현재 위치에서</S.Text>
             <S.Text
               style={{
-                color: "#69D2FF",
+                color: '#69D2FF',
                 fontWeight: 800,
               }}
             >
