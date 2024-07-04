@@ -21,7 +21,7 @@ export default function MyPage() {
     setError('');
 
     try {
-      const req = { userId: 4 };
+      const req = { userId: localStorage.getItem('id') };
       const res = await axios.post('/api/getFolder', req);
 
       if (res.status === 200) {
