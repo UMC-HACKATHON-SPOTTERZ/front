@@ -1,3 +1,4 @@
+import color from '@/styles/color';
 import font from '@/styles/font';
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -25,6 +26,7 @@ const Wrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  margin-bottom: 2.4rem;
 `;
 
 const Line = styled.div`
@@ -41,6 +43,7 @@ const Button = styled.div`
 
   cursor: pointer;
 
+  color: ${props => (props.selected ? color.primary : 'black')};
   border-top: ${props => props.selected && '1px solid #c2c2c2'};
   border-bottom: 1px solid #c2c2c2;
 `;

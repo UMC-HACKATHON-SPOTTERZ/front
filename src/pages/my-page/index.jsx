@@ -15,7 +15,7 @@ export default function MyPage() {
         <Button>내 정보 수정하기</Button>
       </ProfileWrapper>
       <Tab />
-      <SpotList />
+      <SpotList addImage={true} />
     </Wrapper>
   );
 }
