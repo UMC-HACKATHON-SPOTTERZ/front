@@ -1,5 +1,6 @@
 import { NavermapsProvider } from "react-naver-maps";
-import "@/styles/globals.css";
+import "../styles/globals.css";
+
 
 export default function App({ Component, pageProps }) {
   return (
