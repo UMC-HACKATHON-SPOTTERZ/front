@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   align-items: center;
   gap: 1.2rem;
 
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
 `
 
 const Text = styled.p`
