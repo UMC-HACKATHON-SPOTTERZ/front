@@ -17,7 +17,7 @@ export default function Home() {
           height={50}
           style={{ marginBottom: '25px' }}
         />
-        <Button link='/'>내 주변 포토스팟 찾기</Button>
+        <Button link='/spot-list'>내 주변 포토스팟 찾기</Button>
         <Button link='/my-page'>마이페이지</Button>
         <LinkWrapper>
           <Link href='/'>로그인</Link>/<Link href='/'>회원가입</Link>

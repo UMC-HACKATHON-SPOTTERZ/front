@@ -1,19 +1,25 @@
 import NewList from '@/components/MyPage/NewList';
+import Back from '@/components/common/Back';
 import SpotList from '@/components/common/SpotList';
 import color from '@/styles/color';
 import font from '@/styles/font';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
 export default function MyPage() {
-  const [selected, setSelected] = useState('save');
+  const [selected, setSelected] = useState('my');
+
+  const router = useRouter();
+
   return (
     <Wrapper>
+      <Back />
       <ProfileWrapper>
         <Image src='/icons/profile.svg' alt='profile' width={96} height={96} />
         <Name>댕댕이</Name>
-        <Button>내 정보 수정하기</Button>
+        <Button onClick={() => router.push('/edit')}>내 정보 수정하기</Button>
       </ProfileWrapper>
       <TabWrapper>
         <TabButton
