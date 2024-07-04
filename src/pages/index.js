@@ -10,7 +10,7 @@ export default function Home() {
       <Text>인생샷 명소, 제일 쉽게 찾는 법</Text>
       <Image src='/icons/logo.svg' alt="logo" priority={true} width={194} height={50} style={{marginBottom: '25px'}} />
       <Button link='/test'>내 주변 포토스팟 찾기</Button>
-      <Button>마이페이지</Button>
+      <Button link="/my-page">마이페이지</Button>
       <LinkWrapper>
         <Link href="/">로그인</Link>
         /

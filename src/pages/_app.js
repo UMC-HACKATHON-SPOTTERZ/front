@@ -1,6 +1,5 @@
-import Loading from '@/components/common/Loading';
 import '@/styles/globals.css';
-import { Suspense, useEffect } from 'react';
+import { useEffect } from 'react';
 
 export default function App({ Component, pageProps }) {
   function setScreenHeight() {
@@ -14,11 +13,5 @@ export default function App({ Component, pageProps }) {
     return () => window.removeEventListener('resize', setScreenHeight);
   }, []);
 
-  return (
-    <>
-      <Suspense fallback={<Loading />}>
-        <Component {...pageProps} />
-      </Suspense>
-    </>
-  );
+  return <Component {...pageProps} />;
 }
