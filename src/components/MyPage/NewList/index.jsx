@@ -4,12 +4,13 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import styled from 'styled-components';
 
-export default function NewList({ title }) {
+export default function NewList({ title, src }) {
   const router = useRouter();
 
   return title ? (
     <ItemWrapper>
-      {title}
+      <p style={{ zIndex: 10 }}>{title}</p>
+      {src && <BackgroundImg src={src} alt='src' width={329} height={82} />}
       <Image src='/icons/arrow.svg' alt='arrow' width={17} height={31} />
     </ItemWrapper>
   ) : (
@@ -20,10 +21,19 @@ export default function NewList({ title }) {
   );
 }
 
+const BackgroundImg = styled(Image)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 40px;
+`;
+
 const ItemWrapper = styled.div`
   width: 329px;
   height: 82px;
   padding: 0 32px;
+
+  position: relative;
 
   display: flex;
   flex-direction: row;

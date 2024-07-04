@@ -1,6 +1,8 @@
 import Back from '@/components/common/Back';
 import SpotList from '@/components/common/SpotList';
+import axios from 'axios';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -8,13 +10,35 @@ export default function NewList() {
   const [index, setIndex] = useState(0);
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
+  const [error, setError] = useState('');
 
-  useEffect(() => {
-    console.log(index);
-  }, [index]);
+  const router = useRouter();
 
-  const handleClickSubmit = () => {
-    console.log(name, location);
+  const handleClickSubmit = async e => {
+    // e.preventDefault();
+    setError('');
+
+    try {
+      const req = { userId: 4, folderName: name };
+      const res = await axios.post('/api/postFolder', req);
+
+      if (res.status === 200) {
+        console.log('folder post 성공:', res.data);
+        // 토큰 저장 (예: localStorage)
+        localStorage.setItem('id', res.data.id);
+        localStorage.setItem('username', res.data.username);
+        router.push('/my-page');
+      } else {
+        setError('로그인 요청에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('로그인 요청 실패:', error);
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError('네트워크 오류: 로그인 요청에 실패했습니다.');
+      }
+    }
   };
 
   return (

@@ -3,15 +3,47 @@ import Back from '@/components/common/Back';
 import SpotList from '@/components/common/SpotList';
 import color from '@/styles/color';
 import font from '@/styles/font';
+import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 export default function MyPage() {
   const [selected, setSelected] = useState('my');
+  const [error, setError] = useState('');
+  const [data, setData] = useState();
 
   const router = useRouter();
+
+  const fetchData = async e => {
+    // e.preventDefault();
+    setError('');
+
+    try {
+      const req = { userId: 4 };
+      const res = await axios.post('/api/getFolder', req);
+
+      if (res.status === 200) {
+        console.log('folder get 성공:', res.data);
+        setData(res.data.data);
+        console.log(data);
+      } else {
+        setError('로그인 요청에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('로그인 요청 실패:', error);
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError('네트워크 오류: 로그인 요청에 실패했습니다.');
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <Wrapper>
@@ -40,7 +72,13 @@ export default function MyPage() {
       {selected === 'save' && (
         <ListWrapper>
           <NewList />
-          <NewList title='파리' />
+          {data &&
+            data.map((item, i) => (
+              <NewList key={i} title={item.folderName}></NewList>
+            ))}
+          <NewList title='파리' src='/images/dummy_images/list_dummy1.jpg' />
+          <NewList title='선정릉' src='/images/dummy_images/list_dummy2.jpg' />
+          <NewList title='제주도' src='/images/dummy_images/list_dummy3.jpg' />
         </ListWrapper>
       )}
     </Wrapper>
