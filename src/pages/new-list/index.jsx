@@ -19,7 +19,7 @@ export default function NewList() {
     setError('');
 
     try {
-      const req = { userId: 4, folderName: name };
+      const req = { userId: localStorage.getItem('id'), folderName: name };
       const res = await axios.post('/api/postFolder', req);
 
       if (res.status === 200) {
