@@ -124,7 +124,7 @@ export default function Login() {
   return (
     <LoginContainer>
       <SubHeader>인생샷 명소, 제일 쉽게 찾는 법</SubHeader>
-      <Header>spotters</Header>
+      <Header>spotterz</Header>
       <Form onSubmit={handleSubmit}>
         <FormItem>
           <Input
@@ -152,7 +152,7 @@ export default function Login() {
         </FormItem>
         <Button type='submit'>로그인</Button>
       </Form>
-      <Registerlink href={'/sign_up'}>회원가입 하기</Registerlink>
+      <Registerlink href={"/sign_up"}>회원가입 하기</Registerlink>
       <SocialLogin>
         <SocialButton $bgColor='#FFE812'>
           <Image src='/icons/kakao.svg' alt='카카오' width={24} height={24} />

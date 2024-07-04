@@ -20,8 +20,7 @@ export default function Home() {
         <Button link='/spot-list'>내 주변 포토스팟 찾기</Button>
         <Button link='/my-page'>마이페이지</Button>
         <LinkWrapper>
-          <Link href='/login'>로그인</Link>/
-          <Link href='/sign_up'>회원가입</Link>
+          <Link href='/login'>로그인</Link>/<Link href='/sign_up'>회원가입</Link>
         </LinkWrapper>
       </Wrapper>
     </>
