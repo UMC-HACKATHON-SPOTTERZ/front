@@ -6,7 +6,8 @@ import GPS from "../../../public/images/GPS.svg";
 
 import Image from "next/image";
 import SpotMasonryComponent from "../../components/common/SpotMasonryComponent";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import PhotoSpotDetail from "../../components/common/PhotoSpotDetail";
 
 const LocationButton = styled.button`
   width: 113px;
@@ -54,12 +55,14 @@ const CategoryChip = styled.div`
 `;
 
 export default function SpotList() {
-  useEffect(() => {}, []);
+  /* 선택된 사진 */
+  const [selectedData, setSelectedData] = useState(null);
 
   return (
     <div>
       <div
         style={{
+          padding: "20px",
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
@@ -93,7 +96,10 @@ export default function SpotList() {
         <CategoryChip>친구</CategoryChip>
         <CategoryChip>단독</CategoryChip>
       </div>
-      <SpotMasonryComponent />
+      <SpotMasonryComponent setSelectedData={setSelectedData} />
+      {selectedData && (
+        <PhotoSpotDetail selectedData={selectedData} setSelectedData={setSelectedData} />
+      )}
     </div>
   );
 }

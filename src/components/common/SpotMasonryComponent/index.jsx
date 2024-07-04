@@ -8,6 +8,7 @@ import HeartSkyblue from "../../../../public/images/HeartSkyblue.svg";
 const StyledImage = styled(Image)`
   position: relative !important;
   height: unset !important;
+  cursor: pointer;
 `;
 
 const LikeChip = styled.div`
@@ -32,7 +33,7 @@ const LikeChip = styled.div`
   line-height: normal;
 `;
 
-export default function SpotMasonryComponent() {
+export default function SpotMasonryComponent({ setSelectedData }) {
   /* 사진 배열 */
   const [images, setImages] = useState(null);
 
@@ -58,11 +59,17 @@ export default function SpotMasonryComponent() {
   }, []);
 
   return (
-    <Masonry columnsCount={2} gutter="1rem">
+    <Masonry columnsCount={2} gutter="1rem" style={{ padding: "20px" }}>
       {images &&
         images.map((image, index) => (
           <div style={{ position: "relative" }}>
-            <StyledImage key={index} src={image.url} alt="" fill />
+            <StyledImage
+              key={index}
+              src={image.url}
+              alt=""
+              fill
+              onClick={() => setSelectedData(image)}
+            />
             <LikeChip>
               <Image src={HeartSkyblue} alt="" style={{ width: "16px", height: "16px" }} />
               <span>{image.likes}</span>
