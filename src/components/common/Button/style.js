@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import color from '@/styles/color';
+import font from '@/styles/font';
 
 export const Button = styled.button`
   width: 27.7rem;
@@ -9,9 +10,7 @@ export const Button = styled.button`
   border: none;
 
   color: #fff;
-  font-family: 'SUIT Variable';
-  font-size: 2rem;
-  font-weight: 800;
+  ${font.button};
 
   cursor: pointer;
 
