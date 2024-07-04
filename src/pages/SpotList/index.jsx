@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import axios from 'axios';
 
 import spotterz from "../../../public/images/spotterz.svg";
 import Person from "../../../public/images/Person.svg";
@@ -6,7 +7,7 @@ import GPS from "../../../public/images/GPS.svg";
 
 import Image from "next/image";
 import SpotMasonryComponent from "../../components/common/SpotMasonryComponent";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PhotoSpotDetail from "../../components/common/PhotoSpotDetail";
 
 const LocationButton = styled.button`
@@ -57,7 +58,18 @@ const CategoryChip = styled.div`
 export default function SpotList() {
   /* 선택된 사진 */
   const [selectedData, setSelectedData] = useState(null);
+  const [likes, setLikes] = useState(0); // 좋아요 수 상태 관리
 
+  const handleLikeClick = async (photoId) => {
+    try {
+      const response = await axios.post(`/api/v1/spots/like`);
+      const updatedLikes = response.data.likes;
+      setLikes(updatedLikes);
+    } catch (error) {
+      console.error('좋아요 요청 실패:', error);
+      // 에러 처리 로직 추가
+    }
+  };
   return (
     <div>
       <div

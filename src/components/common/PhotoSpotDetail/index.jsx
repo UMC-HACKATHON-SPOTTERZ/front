@@ -1,10 +1,8 @@
 import * as S from "./style";
-
 import HeartOutline from "./heart_outline.svg";
 import HeartFilled from "./heart_filled.svg";
 import AvatarIcon from "./avatar.svg";
 import CircleWithStar from "./CircleWithStar.svg";
-
 import Image from "next/image";
 import NaverMapComponent from "../NaverMap";
 import axios from "axios";
@@ -12,26 +10,63 @@ import { useEffect, useState } from "react";
 import ClickOutside from "../ClickOutside";
 
 export default function PhotoSpotDetail({ selectedData, setSelectedData }) {
-
   /* 경로 저장 */
   const [route, setRoute] = useState(null);
   const [destination, setDestination] = useState(null);
   const [distance, setDistance] = useState(null);
+  const [ImageCard, setImageCard] = useState(null);
 
   // 좋아요
   const [hasLiked, setHasLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+
+  // 목적지 설정
   useEffect(() => {
-    // 목적지
     setDestination({ goal: "127.0470349,37.506823" });
   }, []);
 
-  /* 사진 및 기타 정보 */
-  const [ImageCard, setImageCard] = useState(null);
-
+  // 선택된 데이터 변경 시 이미지 업데이트 및 좋아요 상태 초기화
   useEffect(() => {
-    console.log(selectedData.url);
-    setImageCard(selectedData.url);
+    if (selectedData) {
+      setImageCard(selectedData?.url); // 선택된 데이터의 이미지 업데이트
+      fetchLikeStatus(selectedData.id); // 선택된 데이터의 좋아요 상태 초기화 및 좋아요 수 가져오기
+    }
   }, [selectedData]);
+
+  // 좋아요 상태 및 좋아요 수 초기화 함수
+  const fetchLikeStatus = async (spotId) => {
+    try {
+      const response = await axios.get('/api/v1/spots/like');
+      setHasLiked(response.data.hasLiked);
+      setLikeCount(response.data.likeCount);
+    } catch (error) {
+      console.error('좋아요 상태 초기화 실패:', error);
+    }
+  };
+
+  // 좋아요 클릭 핸들러
+  const handleLikeClick = async () => {
+
+    try {
+      if (hasLiked) {
+        await axios.delete("/api/spots/like", {
+            userId: parseInt(window.localStorage.getItem("id")), // 실제 사용자 ID로 변경해야 함
+            spotId: parseInt(selectedData.id),
+        });
+        setLikeCount(likeCount - 1);
+        setHasLiked(false);
+      } else {
+        await axios.post("/api/spots/like", {
+          userId: parseInt(window.localStorage.getItem("id")), // 실제 사용자 ID로 변경해야 함
+          spotId: parseInt(selectedData.id),
+        });
+        setLikeCount(likeCount + 1);
+        setHasLiked(true);
+      }
+    } catch (error) {
+      console.error('좋아요 요청 실패:', error);
+    }
+  };
 
   return (
     <div
@@ -104,18 +139,18 @@ export default function PhotoSpotDetail({ selectedData, setSelectedData }) {
               <Image
                 src={HeartFilled}
                 alt=""
-                onClick={() => setHasLiked(false)}
+                onClick={handleLikeClick}
                 style={{ cursor: "pointer" }}
               />
             ) : (
               <Image
                 src={HeartOutline}
                 alt=""
-                onClick={() => setHasLiked(true)}
+                onClick={handleLikeClick}
                 style={{ cursor: "pointer" }}
               />
             )}
-            <S.Text>53</S.Text>
+            <S.Text>{likeCount}</S.Text>
             <div style={{ width: "16px" }}></div>
             <Image src={AvatarIcon} alt="" />
             <S.Text>15</S.Text>
@@ -153,3 +188,6 @@ export default function PhotoSpotDetail({ selectedData, setSelectedData }) {
     </div>
   );
 }
+
+
+
