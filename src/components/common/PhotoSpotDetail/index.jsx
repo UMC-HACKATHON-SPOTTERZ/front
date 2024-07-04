@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import ClickOutside from "../ClickOutside";
 
 export default function PhotoSpotDetail({ selectedData, setSelectedData }) {
+
   /* 경로 저장 */
   const [route, setRoute] = useState(null);
   const [destination, setDestination] = useState(null);
