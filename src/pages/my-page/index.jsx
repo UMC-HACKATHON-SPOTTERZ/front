@@ -13,6 +13,7 @@ export default function MyPage() {
   const [selected, setSelected] = useState('my');
   const [error, setError] = useState('');
   const [data, setData] = useState();
+  const [name, setName] = useState();
 
   const router = useRouter();
 
@@ -29,20 +30,29 @@ export default function MyPage() {
         setData(res.data.data);
         console.log(data);
       } else {
-        setError('로그인 요청에 실패했습니다.');
+        setError('폴더 데이터를 가져오는데 실패했습니다.');
       }
     } catch (error) {
-      console.error('로그인 요청 실패:', error);
+      console.error('폴더 요청 실패:', error);
       if (error.response) {
         setError(error.response.data.message);
       } else {
-        setError('네트워크 오류: 로그인 요청에 실패했습니다.');
+        setError('네트워크 오류: 폴더 요청에 실패했습니다.');
       }
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('id');
+    localStorage.removeItem('username');
+
+    alert('로그아웃 되었습니다.');
+    router.push('/');
+  };
+
   useEffect(() => {
     fetchData();
+    setName(localStorage.getItem('username'));
   }, []);
 
   return (
@@ -50,8 +60,9 @@ export default function MyPage() {
       <Back />
       <ProfileWrapper>
         <Image src='/icons/profile.svg' alt='profile' width={96} height={96} />
-        <Name>댕댕이</Name>
+        <Name>{name}</Name>
         <Button onClick={() => router.push('/edit')}>내 정보 수정하기</Button>
+        <Button onClick={() => handleLogout()}>로그아웃하기</Button>
       </ProfileWrapper>
       <TabWrapper>
         <TabButton

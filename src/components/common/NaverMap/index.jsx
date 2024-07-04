@@ -1,5 +1,5 @@
-import axios from "axios";
-import { useState, useRef, useEffect } from "react";
+import axios from 'axios';
+import { useState, useRef, useEffect } from 'react';
 import {
   Container as MapDiv,
   NaverMap,
@@ -7,7 +7,7 @@ import {
   InfoWindow,
   Polyline,
   Marker,
-} from "react-naver-maps";
+} from 'react-naver-maps';
 
 const EndMarkerIcon = {
   content: `<svg width="45" height="45" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,7 +26,7 @@ const EndMarkerIcon = {
   anchor: { x: 20, y: 20 },
 };
 
-const getScaledSize = (zoom) => {
+const getScaledSize = zoom => {
   const baseSize = 37; // Base size of the SVG
   const scale = 1 + (zoom - 10) * 0.1; // Adjust scale as needed
   return { width: baseSize * scale, height: baseSize * scale };
@@ -47,7 +47,10 @@ const MyMap = ({ route, setRoute, destination, setDistance }) => {
     if (!map || !infowindow) return;
 
     setCurrentPosition([position.coords.longitude, position.coords.latitude]);
-    const location = new navermaps.LatLng(position.coords.latitude, position.coords.longitude);
+    const location = new navermaps.LatLng(
+      position.coords.latitude,
+      position.coords.longitude
+    );
     map.setCenter(location);
     map.setZoom(zoom);
     // infowindow.setContent('<div style="padding:20px;">' + "나의 위치" + "</div>");
@@ -58,7 +61,7 @@ const MyMap = ({ route, setRoute, destination, setDistance }) => {
       map: map,
     });
 
-    console.log("Coordinates: " + location.toString());
+    console.log('Coordinates: ' + location.toString());
   }
 
   function onErrorGeolocation() {
@@ -68,16 +71,19 @@ const MyMap = ({ route, setRoute, destination, setDistance }) => {
     infowindow.setContent(
       '<div style="padding:20px;">' +
         '<h5 style="margin-bottom:5px;color:#f00;">Geolocation failed!</h5>' +
-        "latitude: " +
+        'latitude: ' +
         center.lat() +
-        "<br />longitude: " +
+        '<br />longitude: ' +
         center.lng() +
-        "</div>"
+        '</div>'
     );
     infowindow.open(map, center);
 
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(onSuccessGeolocation, onErrorGeolocation);
+      navigator.geolocation.getCurrentPosition(
+        onSuccessGeolocation,
+        onErrorGeolocation
+      );
     } else {
       const center = map.getCenter();
       infowindow.setContent(
@@ -93,7 +99,10 @@ const MyMap = ({ route, setRoute, destination, setDistance }) => {
     }
 
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(onSuccessGeolocation, onErrorGeolocation);
+      navigator.geolocation.getCurrentPosition(
+        onSuccessGeolocation,
+        onErrorGeolocation
+      );
     } else {
       var center = map.getCenter();
       infowindow.setContent(
@@ -103,10 +112,13 @@ const MyMap = ({ route, setRoute, destination, setDistance }) => {
     }
   }, [map, infowindow]);
 
-  const FindRoutes = async (destination) => {
+  const FindRoutes = async destination => {
     /* 경도,위도순 */
-    const getRoutes = await axios.get("/api/FindRoute", {
-      params: { start: `${currentPosition[0]},${currentPosition[1]}`, goal: destination.goal },
+    const getRoutes = await axios.get('/api/findRoute', {
+      params: {
+        start: `${currentPosition[0]},${currentPosition[1]}`,
+        goal: destination.goal,
+      },
     });
 
     const getRouteResult = getRoutes.data.data;
@@ -115,12 +127,18 @@ const MyMap = ({ route, setRoute, destination, setDistance }) => {
 
     /* 위도,경도순 */
     var startPos = new naver.maps.Marker({
-      position: new navermaps.LatLng(getRouteResult.startPos[0], getRouteResult.startPos[1]),
+      position: new navermaps.LatLng(
+        getRouteResult.startPos[0],
+        getRouteResult.startPos[1]
+      ),
       map: map,
     });
 
     var endPos = new naver.maps.Marker({
-      position: new navermaps.LatLng(getRouteResult.endPos[0], getRouteResult.endPos[1]),
+      position: new navermaps.LatLng(
+        getRouteResult.endPos[0],
+        getRouteResult.endPos[1]
+      ),
       map: map,
       icon: EndMarkerIcon,
       size: getScaledSize(zoom),
@@ -145,10 +163,12 @@ const MyMap = ({ route, setRoute, destination, setDistance }) => {
       >
         {route && (
           <Polyline
-            path={route.path.map(([lng, lat]) => new window.naver.maps.LatLng(lat, lng))}
+            path={route.path.map(
+              ([lng, lat]) => new window.naver.maps.LatLng(lat, lng)
+            )}
             // clickable // 사용자 인터랙션을 받기 위해 clickable을 true로 설정합니다.
-            strokeColor={"#69D2FF"}
-            strokeStyle={"solid"}
+            strokeColor={'#69D2FF'}
+            strokeStyle={'solid'}
             strokeOpacity={0.8}
             strokeWeight={4}
           />
@@ -159,12 +179,17 @@ const MyMap = ({ route, setRoute, destination, setDistance }) => {
   );
 };
 
-export default function NaverMapComponent({ route, setRoute, destination, setDistance }) {
+export default function NaverMapComponent({
+  route,
+  setRoute,
+  destination,
+  setDistance,
+}) {
   return (
     <MapDiv
       style={{
-        width: "calc(500px - 8px - 8px)",
-        height: "400px",
+        width: 'calc(500px - 8px - 8px)',
+        height: '400px',
       }}
     >
       <NaverMap>
