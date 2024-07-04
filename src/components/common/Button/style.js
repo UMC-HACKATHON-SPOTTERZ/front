@@ -10,7 +10,7 @@ export const Button = styled.button`
   border: none;
 
   color: #fff;
-  ${font.button};
+  ${font.title};
 
   cursor: pointer;
 
