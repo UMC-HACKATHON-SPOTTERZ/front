@@ -63,6 +63,14 @@ export default function SpotList() {
   const router = useRouter();
   const [selectedChip, setSelectedChip] = useState('');
 
+  const handleClickButton = () => {
+    if (localStorage.getItem('id')) {
+      router.push('/my-page');
+    } else {
+      alert('로그인이 필요합니다.');
+    }
+  };
+
   return (
     <div>
       <div
@@ -83,7 +91,7 @@ export default function SpotList() {
           style={{ width: '117px', cursor: 'pointer' }}
         />
         <Image
-          onClick={() => router.push('/my-page')}
+          onClick={() => handleClickButton()}
           src={Person}
           alt=''
           style={{ width: '30px', cursor: 'pointer' }}
