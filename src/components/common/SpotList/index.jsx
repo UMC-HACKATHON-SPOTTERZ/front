@@ -1,20 +1,20 @@
+import Image from 'next/image';
 import React from 'react';
 import Masonry from 'react-responsive-masonry';
+import styled from 'styled-components';
+
+const StyledImage = styled(Image)`
+  position: relative !important;
+  height: unset !important;
+`;
 
 export default function SpotList() {
   return (
-    <Masonry columnsCount={2}>
-      <div style={{ height: '50px', backgroundColor: 'aliceblue' }}>
-        sdfds11
-      </div>
-      <div style={{ height: '70px', backgroundColor: 'yellow' }}>sdfds22</div>
-      <div style={{ height: '30px', backgroundColor: 'pink' }}>sdfds33</div>
-      <div style={{ height: '150px', backgroundColor: 'green' }}>sdfds44</div>
-      <div style={{ height: '80px', backgroundColor: 'gray' }}>sdfds55</div>
-      <div style={{ height: '60px', backgroundColor: 'pink' }}>sdfds66</div>
-      <div style={{ height: '50px', backgroundColor: 'aliceblue' }}>
-        sdfds77
-      </div>
+    <Masonry columnsCount={2} gutter='1rem'>
+      <StyledImage src='/images/dummy_images/dummy1.jpeg' alt='dummy' fill />
+      <StyledImage src='/images/dummy_images/dummy2.jpeg' alt='dummy' fill />
+      <StyledImage src='/images/dummy_images/dummy3.jpeg' alt='dummy' fill />
+      <StyledImage src='/images/dummy_images/dummy4.jpeg' alt='dummy' fill />
     </Masonry>
   );
 }
