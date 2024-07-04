@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { useRouter } from "next/router";
-import styled, { css } from "styled-components";
-import axios from "axios";
-import Image from "next/image";
-import { baseURL } from "../../../../front/src/api/setting";
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import styled, { css } from 'styled-components';
+import axios from 'axios';
+import Image from 'next/image';
+import { baseURL } from '../../../../front/src/api/setting';
 
 export const LoginContainer = styled.div`
   height: 852px;
@@ -20,7 +20,7 @@ export const Header = styled.h1`
 `;
 export const SubHeader = styled.div`
   color: rgb(0, 179, 255);
-  font-family: "SUIT Variable";
+  font-family: 'SUIT Variable';
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -57,7 +57,8 @@ export const Button = styled.button`
   height: 38px;
   border-radius: 10px;
   background: rgb(105, 210, 255);
-  box-shadow: 0px 7px 7px 0px rgba(0, 0, 0, 0.09), 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 7px 7px 0px rgba(0, 0, 0, 0.09),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.1);
   border: none;
   color: white;
   cursor: pointer;
@@ -81,7 +82,7 @@ export const SocialButton = styled.button`
   border-radius: 50px;
   border: none;
   cursor: pointer;
-  background-color: ${({ $bgColor }) => $bgColor || "#ccc"};
+  background-color: ${({ $bgColor }) => $bgColor || '#ccc'};
 `;
 
 export const ErrorMessage = styled.p`
@@ -89,33 +90,33 @@ export const ErrorMessage = styled.p`
 `;
 
 export default function Login() {
-  const [Id, setId] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [Id, setId] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    setError("");
+    setError('');
 
     try {
-      const res = await axios.post("/api/login", { username: Id, password });
+      const res = await axios.post('/api/login', { username: Id, password });
 
       if (res.status === 200) {
-        console.log("로그인 성공:", res.data);
+        console.log('로그인 성공:', res.data);
         // 토큰 저장 (예: localStorage)
-        localStorage.setItem("id", res.data.id);
-        localStorage.setItem("username", res.data.username);
-        router.push("/");
+        localStorage.setItem('id', res.data.id);
+        localStorage.setItem('username', res.data.username);
+        router.push('/');
       } else {
-        setError("로그인 요청에 실패했습니다.");
+        setError('로그인 요청에 실패했습니다.');
       }
     } catch (error) {
-      console.error("로그인 요청 실패:", error);
+      console.error('로그인 요청 실패:', error);
       if (error.response) {
         setError(error.response.data.message);
       } else {
-        setError("네트워크 오류: 로그인 요청에 실패했습니다.");
+        setError('네트워크 오류: 로그인 요청에 실패했습니다.');
       }
     }
   };
@@ -127,43 +128,48 @@ export default function Login() {
       <Form onSubmit={handleSubmit}>
         <FormItem>
           <Input
-            type="text"
+            type='text'
             style={{
               backgroundImage: "url('/icons/person.svg')",
             }}
             value={Id}
-            onChange={(e) => setId(e.target.value)}
+            onChange={e => setId(e.target.value)}
             required
-            placeholder="아이디"
+            placeholder='아이디'
           />
         </FormItem>
         <FormItem>
           <Input
-            type="password"
+            type='password'
             style={{
               backgroundImage: "url('/icons/key.svg')",
             }}
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={e => setPassword(e.target.value)}
             required
-            placeholder="비밀번호"
+            placeholder='비밀번호'
           />
         </FormItem>
-        <Button type="submit">로그인</Button>
+        <Button type='submit'>로그인</Button>
       </Form>
-      <Registerlink href={"/signup"}>회원가입 하기</Registerlink>
+      <Registerlink href={'/signup'}>회원가입 하기</Registerlink>
       <SocialLogin>
-        <SocialButton $bgColor="#FFE812">
-          <Image src="/icons/kakaotalk.png" alt="카카오" width={24} height={24} />
+        <SocialButton $bgColor='#FFE812'>
+          <Image
+            src='/icons/kakaotalk.png'
+            alt='카카오'
+            width={24}
+            height={24}
+          />
         </SocialButton>
-        <SocialButton $bgColor="#04C75B">
-          <Image src="/icons/naver.png" alt="네이버" width={24} height={24} />
+        <SocialButton $bgColor='#04C75B'>
+          <Image src='/icons/naver.png' alt='네이버' width={24} height={24} />
         </SocialButton>
-        <SocialButton $bgColor="#F6F6F6">
-          <Image src="/icons/google.png" alt="구글" width={24} height={24} />
+        <SocialButton $bgColor='#F6F6F6'>
+          <Image src='/icons/google.png' alt='구글' width={24} height={24} />
         </SocialButton>
-        <SocialButton $bgColor="#000">
-          <Image src="/icons/apple.png" alt="애플" width={24} height={24} />
+        <SocialButton $bgColor='#000'>
+          <Image src='/icons/apple.png' alt='애플' width={24} height={24} />
         </SocialButton>
       </SocialLogin>
       {error && <ErrorMessage>{error}</ErrorMessage>}

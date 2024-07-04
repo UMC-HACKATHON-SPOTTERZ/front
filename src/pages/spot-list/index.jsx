@@ -9,6 +9,7 @@ import SpotMasonryComponent from '../../components/common/SpotMasonryComponent';
 import { useEffect, useState } from 'react';
 import PhotoSpotDetail from '../../components/common/PhotoSpotDetail';
 import { useRouter } from 'next/router';
+import color from '@/styles/color';
 
 const LocationButton = styled.button`
   width: 113px;
@@ -43,11 +44,11 @@ const CategoryChip = styled.div`
   justify-content: center;
   white-space: nowrap;
   border-radius: 30px;
-  background: #d9d9d9;
+  background: ${props => (props.selected ? color.primary : '#d9d9d9')};
+  color: #fff;
   box-shadow: 0px 4px 1px 0px rgba(0, 0, 0, 0),
     0px 3px 1px 0px rgba(0, 0, 0, 0.01), 0px 2px 1px 0px rgba(0, 0, 0, 0.05),
     0px 1px 1px 0px rgba(0, 0, 0, 0.09);
-  color: #fff;
   font-family: 'SUIT Variable';
   font-size: 15px;
   font-style: normal;
@@ -60,6 +61,7 @@ export default function SpotList() {
   /* 선택된 사진 */
   const [selectedData, setSelectedData] = useState(null);
   const router = useRouter();
+  const [selectedChip, setSelectedChip] = useState('');
 
   return (
     <div>
@@ -81,6 +83,7 @@ export default function SpotList() {
           style={{ width: '117px', cursor: 'pointer' }}
         />
         <Image
+          onClick={() => router.push('/my-page')}
           src={Person}
           alt=''
           style={{ width: '30px', cursor: 'pointer' }}
@@ -101,12 +104,42 @@ export default function SpotList() {
           gap: '5px',
         }}
       >
-        <CategoryChip>커플</CategoryChip>
-        <CategoryChip>풍경</CategoryChip>
-        <CategoryChip>가족</CategoryChip>
-        <CategoryChip>반려동물</CategoryChip>
-        <CategoryChip>친구</CategoryChip>
-        <CategoryChip>단독</CategoryChip>
+        <CategoryChip
+          onClick={() => setSelectedChip('커플')}
+          selected={selectedChip === '커플'}
+        >
+          커플
+        </CategoryChip>
+        <CategoryChip
+          onClick={() => setSelectedChip('풍경')}
+          selected={selectedChip === '풍경'}
+        >
+          풍경
+        </CategoryChip>
+        <CategoryChip
+          onClick={() => setSelectedChip('가족')}
+          selected={selectedChip === '가족'}
+        >
+          가족
+        </CategoryChip>
+        <CategoryChip
+          onClick={() => setSelectedChip('반려동물')}
+          selected={selectedChip === '반려동물'}
+        >
+          반려동물
+        </CategoryChip>
+        <CategoryChip
+          onClick={() => setSelectedChip('친구')}
+          selected={selectedChip === '친구'}
+        >
+          친구
+        </CategoryChip>
+        <CategoryChip
+          onClick={() => setSelectedChip('단독')}
+          selected={selectedChip === '단독'}
+        >
+          단독
+        </CategoryChip>
       </div>
       <SpotMasonryComponent setSelectedData={setSelectedData} />
       {selectedData && (

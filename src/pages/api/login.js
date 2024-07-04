@@ -1,10 +1,10 @@
-import axios from "axios";
-import { baseURL } from "../../api/setting";
+import axios from 'axios';
+import { baseURL } from '../../api/setting';
 
 export default async function handler(req, res) {
   const { username, password } = req.body;
 
-  const response = await axios.post(baseURL + "/api/v1/users/login", {
+  const response = await axios.post(baseURL + '/api/v1/users/login', {
     username,
     password,
   });
@@ -14,7 +14,11 @@ export default async function handler(req, res) {
       console.log(response.data);
       return res
         .status(200)
-        .json({ ok: true, id: response.data.id, username: response.data.username });
+        .json({
+          ok: true,
+          id: response.data.id,
+          username: response.data.username,
+        });
     }
   } catch (e) {
     console.log(e);
