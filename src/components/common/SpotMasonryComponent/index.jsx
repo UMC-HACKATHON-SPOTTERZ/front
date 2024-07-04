@@ -4,6 +4,7 @@ import Masonry from "react-responsive-masonry";
 import styled from "styled-components";
 
 import HeartSkyblue from "../../../../public/images/HeartSkyblue.svg";
+import axios from "axios";
 
 const StyledImage = styled(Image)`
   position: relative !important;
@@ -36,27 +37,36 @@ const LikeChip = styled.div`
 export default function SpotMasonryComponent({ setSelectedData }) {
   /* 사진 배열 */
   const [images, setImages] = useState(null);
+  const [currentPosition, setCurrentPosition] = useState(null);
 
   useEffect(() => {
-    setImages([
-      {
-        likes: 53,
-        url: "/images/dummy_images/dummy1.jpeg",
-      },
-      {
-        likes: 19,
-        url: "/images/dummy_images/dummy2.jpeg",
-      },
-      {
-        likes: 33,
-        url: "/images/dummy_images/dummy3.jpeg",
-      },
-      {
-        likes: 27,
-        url: "/images/dummy_images/dummy4.jpeg",
-      },
-    ]);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(onSuccessGeolocation, () => {});
+    }
+
+    function onSuccessGeolocation(position) {
+      setCurrentPosition([position.coords.longitude, position.coords.latitude]);
+    }
   }, []);
+
+  useEffect(() => {
+    getImages();
+  }, [currentPosition]);
+
+  const getImages = async () => {
+    if (currentPosition) {
+      const response = await axios.get("/api/spots/list", {
+        params: {
+          latitude: currentPosition[1],
+          longitude: currentPosition[0],
+        },
+      });
+
+      const responseData = response.data.data;
+
+      setImages(responseData);
+    }
+  };
 
   return (
     <Masonry columnsCount={2} gutter="1rem" style={{ padding: "20px" }}>
@@ -65,17 +75,20 @@ export default function SpotMasonryComponent({ setSelectedData }) {
           <div style={{ position: "relative" }}>
             <StyledImage
               key={index}
-              src={image.url}
+              src={image.imgUrl}
               alt=""
               fill
               onClick={() => setSelectedData(image)}
             />
             <LikeChip>
               <Image src={HeartSkyblue} alt="" style={{ width: "16px", height: "16px" }} />
-              <span>{image.likes}</span>
+              <span>{image.likeNum || 0}</span>
             </LikeChip>
           </div>
         ))}
+      {!images && (
+        <span style={{ width: "500px", textAlign: "center" }}>스팟이 아직 없습니다 :(</span>
+      )}
     </Masonry>
   );
 }

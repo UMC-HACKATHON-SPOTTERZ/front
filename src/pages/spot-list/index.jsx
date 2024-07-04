@@ -63,7 +63,6 @@ export default function SpotList() {
   const [selectedData, setSelectedData] = useState(null);
   const router = useRouter();
   const [selectedChip, setSelectedChip] = useState("");
-
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -119,6 +118,9 @@ export default function SpotList() {
                 fontStyle: "normal",
                 fontWeight: 500,
                 lineHeight: "normal",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
               }}
             >
               내 위치 반경 500m 내의
