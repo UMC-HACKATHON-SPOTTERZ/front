@@ -152,24 +152,19 @@ export default function Login() {
         </FormItem>
         <Button type='submit'>로그인</Button>
       </Form>
-      <Registerlink href={'/signup'}>회원가입 하기</Registerlink>
+      <Registerlink href={'/sign_up'}>회원가입 하기</Registerlink>
       <SocialLogin>
         <SocialButton $bgColor='#FFE812'>
-          <Image
-            src='/icons/kakaotalk.png'
-            alt='카카오'
-            width={24}
-            height={24}
-          />
+          <Image src='/icons/kakao.svg' alt='카카오' width={24} height={24} />
         </SocialButton>
         <SocialButton $bgColor='#04C75B'>
-          <Image src='/icons/naver.png' alt='네이버' width={24} height={24} />
+          <Image src='/icons/naver.svg' alt='네이버' width={24} height={24} />
         </SocialButton>
         <SocialButton $bgColor='#F6F6F6'>
-          <Image src='/icons/google.png' alt='구글' width={24} height={24} />
+          <Image src='/icons/google.svg' alt='구글' width={24} height={24} />
         </SocialButton>
         <SocialButton $bgColor='#000'>
-          <Image src='/icons/apple.png' alt='애플' width={24} height={24} />
+          <Image src='/icons/apple.svg' alt='애플' width={24} height={24} />
         </SocialButton>
       </SocialLogin>
       {error && <ErrorMessage>{error}</ErrorMessage>}

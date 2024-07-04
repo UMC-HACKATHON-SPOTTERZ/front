@@ -16,8 +16,6 @@ export default function MyPage() {
 
   const router = useRouter();
 
-  data.map(item => console.log(item.folderName));
-
   const fetchData = async e => {
     // e.preventDefault();
     setError('');
