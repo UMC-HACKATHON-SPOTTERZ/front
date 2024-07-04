@@ -8,11 +8,11 @@ function FONT({ weight, size }) {
 
 const font = {
   // 10px = 1rem
-  title: FONT({ weight: 800, size: 3 }),
-  sub_title: FONT({ weight: 700, size: 2 }),
-  bold_12: FONT({ weight: 800, size: 1.2 }),
-  medium_12: FONT({ weight: 700, size: 1.2 }),
-  regular: FONT({ weight: 500, size: 1.2 }),
+  title: FONT({ weight: 800, size: 2 }),
+  bold_13: FONT({ weight: 800, size: 1.3 }),
+  bold_16: FONT({ weight: 800, size: 1.6 }),
+  medium_16: FONT({ weight: 600, size: 1.6 }),
+  regular_14: FONT({ weight: 700, size: 1.4 }),
 };
 
 export default font;
