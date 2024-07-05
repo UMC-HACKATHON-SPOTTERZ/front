@@ -13,8 +13,8 @@ export default function SignUp() {
   const [index, setIndex] = useState(0);
 
   const [Id, setId] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [nickname, setNickname] = useState(null);
+  const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
 
   // 회원가입
   const handleSubmit = async e => {
@@ -56,8 +56,8 @@ export default function SignUp() {
       return (
         <SignUp_Password
           setIndex={setIndex}
-          nickname={nickname}
           setPassword={setPassword}
+          nickname={nickname}
           handleSubmit={handleSubmit}
         />
       );

@@ -21,7 +21,6 @@ export default function NewList() {
     try {
       const req = { userId: localStorage.getItem('id'), folderName: name };
       const res = await axios.post('/api/postFolder', req);
-
       if (res.status === 200) {
         console.log('folder post 성공:', res.data);
         // 토큰 저장 (예: localStorage)
@@ -167,18 +166,16 @@ const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-
-  margin-top: 16px;
+  align-items: center;
 `;
-
 const Button = styled.div`
+  margin-top: 20px;
   width: 71px;
   height: 40px;
   border-radius: 10px;
-
-  text-align: center;
-  padding: 12px 24px;
-
+  display: flex; /* 추가 */
+  justify-content: center; /* 추가 */
+  align-items: center; /* 추가 */
   color: white;
   background: #69d2ff;
   box-shadow: 0px 7px 7px 0px rgba(0, 0, 0, 0.09),
